@@ -9,7 +9,7 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import StatCard from "../components/StatCard";
 import {
   ParkingSquare, Car, CheckCircle,
-  Banknote, TrendingUp, Clock,
+  Banknote, TrendingUp,
   Calendar, Activity
 } from "lucide-react";
 import api from "../api/axios";

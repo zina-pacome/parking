@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [token]);
 
   const login = async (email, mot_de_passe) => {
     const res = await axios.post(
