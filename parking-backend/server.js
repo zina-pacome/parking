@@ -1,4 +1,7 @@
-require('dotenv').config({ override: false });
+// En production (Railway), ne pas utiliser dotenv
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 const express   = require('express');
 const cors      = require('cors');
 const helmet    = require('helmet');
