@@ -11,7 +11,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://parkmanager.vercel.app',
+    'https://parking-oj7a-24iyq78n5-zina-pacomes-projects.vercel.app',
     /\.vercel\.app$/
   ],
   credentials: true
