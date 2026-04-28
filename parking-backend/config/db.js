@@ -1,12 +1,14 @@
 const mysql = require('mysql2/promise');
-require('dotenv').config();
 
-console.log('DATABASE_URL présente:', !!process.env.DATABASE_URL);
-console.log('DATABASE_URL début:', process.env.DATABASE_URL?.substring(0, 20));
+// Ne pas appeler dotenv ici — Railway injecte directement les variables
+const url = process.env.DATABASE_URL;
+
+console.log('=== DB DEBUG ===');
+console.log('DATABASE_URL présente:', !!url);
+console.log('Toutes les vars:', Object.keys(process.env).filter(k => k.includes('DATA') || k.includes('MYSQL') || k.includes('DB')));
+console.log('================');
 
 let pool;
-
-const url = process.env.DATABASE_URL;
 
 if (url) {
   pool = mysql.createPool({
@@ -16,7 +18,6 @@ if (url) {
     ssl:                { rejectUnauthorized: false }
   });
 } else {
-  console.error('❌ DATABASE_URL manquante !');
   pool = mysql.createPool({
     host:     process.env.DB_HOST     || 'localhost',
     port:     parseInt(process.env.DB_PORT) || 3306,
