@@ -18,7 +18,7 @@ export default function Paiements() {
   });
 
   useEffect(() => { chargerStats(); }, []);
-  useEffect(() => { chargerPaiements(); }, [chargerPaiements]);
+  useEffect(() => { chargerPaiements(); }, [filtres]);
 
   const chargerStats = async () => {
     try {
