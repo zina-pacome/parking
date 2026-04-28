@@ -7,6 +7,9 @@ const rateLimit = require('express-rate-limit');
 const app  = express();
 const PORT = process.env.PORT || 5000;
 
+// NOUVEAU : dire à Express de faire confiance au proxy Railway
+app.set('trust proxy', 1);
+
 app.use(helmet());
 app.use(cors({
   origin: [
@@ -19,18 +22,20 @@ app.use(cors({
 app.use(express.json());
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: { message: 'Trop de requêtes, réessaie dans 15 minutes' }
+  max:      100,
+  message:  { message: 'Trop de requêtes, réessaie dans 15 minutes' }
 }));
 
 // Routes
-app.use('/api/dashboard',  require('./routes/dashboard.routes'));
-app.use('/api/auth',    require('./routes/auth.routes'));
-app.use('/api/entrees', require('./routes/entrees.routes'));
-app.use('/api/places',  require('./routes/places.routes'));
-app.use('/api/paiements', require('./routes/paiements.routes'));
+app.use('/api/auth',         require('./routes/auth.routes'));
+app.use('/api/places',       require('./routes/places.routes'));
+app.use('/api/entrees',      require('./routes/entrees.routes'));
+app.use('/api/paiements',    require('./routes/paiements.routes'));
 app.use('/api/reservations', require('./routes/reservations.routes'));
+app.use('/api/historique',   require('./routes/historique.routes'));
+app.use('/api/dashboard',    require('./routes/dashboard.routes'));
 app.use('/api/utilisateurs', require('./routes/utilisateurs.routes'));
+
 app.get('/api/ping', (req, res) => {
   res.json({ message: 'Serveur OK', date: new Date() });
 });
@@ -44,8 +49,5 @@ app.listen(PORT, async () => {
   } catch (err) {
     console.error('❌ Erreur MySQL :', err.message);
   }
-
-  // Démarrer les tâches automatiques
   require('./utils/cron')();
 });
-app.use('/api/historique', require('./routes/historique.routes'));
