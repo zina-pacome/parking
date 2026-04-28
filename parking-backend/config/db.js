@@ -1,32 +1,19 @@
 const mysql = require('mysql2/promise');
 
-// Ne jamais appeler dotenv ici
-const url = process.env.DATABASE_URL;
+const url = process.env.DATABASE_URL || 
+  'mysql://root:bNSgjwJeOEgIxwFKNolPJZpDpUMkMYTN@switchback.proxy.rlwy.net:54804/railway';
 
 console.log('=== DB DEBUG ===');
 console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('DATABASE_URL présente:', !!url);
+console.log('DATABASE_URL présente:', !!process.env.DATABASE_URL);
+console.log('URL utilisée:', url.substring(0, 30));
 console.log('================');
 
-let pool;
-
-if (url) {
-  pool = mysql.createPool({
-    uri:                url,
-    waitForConnections: true,
-    connectionLimit:    10,
-    ssl:                { rejectUnauthorized: false }
-  });
-} else {
-  pool = mysql.createPool({
-    host:               'localhost',
-    port:               3306,
-    user:               'root',
-    password:           '',
-    database:           'parking_db',
-    waitForConnections: true,
-    connectionLimit:    10,
-  });
-}
+const pool = mysql.createPool({
+  uri:                url,
+  waitForConnections: true,
+  connectionLimit:    10,
+  ssl:                { rejectUnauthorized: false }
+});
 
 module.exports = pool;
