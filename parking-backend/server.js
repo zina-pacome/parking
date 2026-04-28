@@ -8,7 +8,14 @@ const app  = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(helmet());
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://parkmanager.vercel.app',
+    /\.vercel\.app$/
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
