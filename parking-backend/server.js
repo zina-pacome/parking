@@ -43,17 +43,6 @@ app.get('/api/ping', (req, res) => {
   res.json({ message: 'Serveur OK', date: new Date() });
 });
 
-// Route temporaire pour reset mot de passe — À SUPPRIMER APRÈS
-app.get('/api/reset-admin', async (req, res) => {
-  const bcrypt = require('bcryptjs');
-  const pool   = require('./config/db');
-  const hash   = await bcrypt.hash('password', 10);
-  await pool.query(
-    'UPDATE utilisateurs SET mot_de_passe = ? WHERE email IN (?, ?)',
-    [hash, 'admin@parking.mg', 'agent@parking.mg']
-  );
-  res.json({ message: 'Mot de passe réinitialisé', hash });
-});
 
 app.listen(PORT, async () => {
   console.log(`✅ Serveur démarré sur http://localhost:${PORT}`);
