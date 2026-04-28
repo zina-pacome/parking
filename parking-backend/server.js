@@ -45,12 +45,14 @@ app.get('/api/ping', (req, res) => {
 
 app.listen(PORT, async () => {
   console.log(`✅ Serveur démarré sur http://localhost:${PORT}`);
+  console.log('DATABASE_URL dans server.js:', process.env.DATABASE_URL?.substring(0, 30));
   try {
     const pool = require('./config/db');
     await pool.query('SELECT 1');
     console.log('✅ Connecté à MySQL !');
   } catch (err) {
-    console.error('❌ Erreur MySQL :', err.message);
+    console.error('❌ Erreur MySQL complète:', err.message);
+    console.error('❌ Code erreur:', err.code);
   }
   require('./utils/cron')();
 });
