@@ -13,8 +13,8 @@ export default function Paiements() {
   const [stats,     setStats]     = useState(null);
   const [loading,   setLoading]   = useState(true);
   const [recu,      setRecu]      = useState(null);
-  const [filtres,   setFiltres]   = useState({
-    date: new Date().toISOString().split('T')[0], methode: "",
+  const [filtres, setFiltres] = useState({
+    date: "", methode: "",
   });
 
   useEffect(() => { chargerStats(); }, []);

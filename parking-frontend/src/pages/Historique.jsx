@@ -8,8 +8,8 @@ export default function Historique() {
   const [historique, setHistorique] = useState([]);
   const [loading,    setLoading]    = useState(true);
   const [stats,      setStats]      = useState(null);
-  const [filtres,    setFiltres]    = useState({
-    date: new Date().toISOString().split('T')[0],
+  const [filtres, setFiltres] = useState({
+    date: "", // pas de filtre date par défaut
     plaque: "", type: "",
   });
 
